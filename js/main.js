@@ -19,7 +19,7 @@ puzzlePiecesContainer = document.querySelector('.puzzle-pieces'), // Stores the 
 // functionality always goes in the middle -> how do we want
 // the app to behave?
 function changeBGImage() {
-	// the `` is a JavaScript template string. It tells the JS enging to evaluate the expression
+	// the `` is a JavaScript template string. It tells the JS engine to evaluate the expression
 	// inside the braces - run that little bit of code. In this case it's just pulling the ID of the
 	// button we clicked on and putting it at the end of the image name (0, 1, 2, 3)
 	// and updating the background-image style of the puzzle board element.
@@ -59,13 +59,18 @@ function handleDragOver(e) {
 
 function handleDrop(e) {
     e.preventDefault();
-    console.log('dropped something on me');
-	// bug fix #1 should go here, and it's at most 3 lines of JS code
+    console.log('Dropped something on me');
 
-	// this line is going to move the dragged piece from the left side of the board
-	// into whatever drop zone we choose. appendChild means "add element to the container"
-    this.appendChild(draggedPiece);
+    // Bug fix #1 - Ensure only one piece can be placed per drop zone
+    if (draggedPiece) { // Check if a valid puzzle piece is being dragged
+        if (!this.hasChildNodes()) { // Check if drop zone is empty
+            this.appendChild(draggedPiece); // If empty, allow piece drop
+        } else {
+            console.log("Drop zone already occupied!"); // If not empty, do not drop in
+        }
+    }
 }
+// End of bug fix #1
 
 // event listeners
 // add event handling to each button in the collection of buttons, one at a time
