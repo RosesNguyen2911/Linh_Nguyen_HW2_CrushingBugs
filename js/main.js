@@ -10,6 +10,7 @@ let theButtons = document.querySelectorAll('#buttonHolder img'),
 puzzleBoard = document.querySelector('.puzzle-board'),
 puzzlePieces = document.querySelectorAll('.puzzle-pieces img'),
 dropZones = document.querySelectorAll('.drop-zone'),
+puzzlePiecesContainer = document.querySelector('.puzzle-pieces'), // Stores the initial puzzle pieces container
 	// store the dragged piece in a global variable
 	// because we need it in the handleDrop function
     draggedPiece;
@@ -25,7 +26,23 @@ function changeBGImage() {
 
 	// bug fix #2 should go here. it's at most 3 lines of JS code.
     puzzleBoard.style.backgroundImage = `url(images/backGround${this.id}.jpg)`;
+
+resetPuzzlePieces(); // Call the reset function to clear the board
 }
+
+function resetPuzzlePieces() {
+    console.log("Resetting all puzzle pieces..."); // Debugging - check if function is triggered
+
+    // Loop through all drop zones to check for any placed puzzle pieces
+    dropZones.forEach(zone => {
+        while (zone.firstChild) { // While there is a piece inside the drop zone
+            puzzlePiecesContainer.appendChild(zone.firstChild); // Move the piece back to the original container
+        }
+    });
+
+    console.log("All pieces have been reset!"); // Confirm successful reset
+}
+// End of bug fix #2
 
 function handleStartDrag() {
     console.log('started dragging this piece: ', this);
